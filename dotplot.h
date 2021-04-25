@@ -22,7 +22,7 @@ binMat* dotplot1(string s1, string s2);
 
 binMat* diagonal(binMat* Mdot);
 
-
+binMat* diagonal2(binMat* Mdot);
 
 
 

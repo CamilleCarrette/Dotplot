@@ -92,6 +92,39 @@ binMat* diagonal(binMat* Mdot)
 }
 
 
+binMat* diagonal2(binMat* Mdot)
+{
+    int n,count;
+    binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
+    cout<<"Les diagonales de longueur au moins 'n' seront prises en compte"<<endl;
+    cout<<"Entrez n : ";
+    cin>>n;
+    for (int i = 0; i < (Mdot->n - (n-1)); i++)
+    {
+        for (int j = (n-1); j < Mdot->m; j++)
+        {
+            if (Mdot->Mat[i][j] && !(Mdiag->Mat[i][j]))
+            {
+                count = 0;
+                while((i+count)<Mdot->n && (j-count)>=0 && Mdot->Mat[i+count][j-count]) 
+                {
+                    count++;
+                }
+                if (count>=n)
+                {
+                    count--;
+                    while(count>=0)
+                    {
+                        Mdiag->Mat[i+count][j-count] = true;
+                        count--;
+                    }                    
+                }                
+            }            
+        }        
+    }    
+    return Mdiag;
+}
+
 int main()
 {
     string s1,s2;
@@ -102,11 +135,47 @@ int main()
     binMat* M = dotplot1(s1,s2);
     cout<<"Matrice du dotplot : "<<endl;
     M->afficheMatrice();
-    binMat* M2 = diagonal(M);
-    cout<<"Matrice des diagonales : "<<endl;
-    M2->afficheMatrice();
-    M->destructor();
-    M2->destructor();
-    
-    return 0;
+    unsigned int cases;
+    binMat* M2;
+    while (1)
+    {
+        cout<<"Que faire :"<<endl<<endl
+            <<"1- Exposer les diagonales"<<endl
+            <<"2- Exposer les diagonales inverses"<<endl
+            <<"3- Changer les sequences"<<endl
+            <<"Autre pour sortir du programme"<<endl;
+        cin>>cases;
+        cout<<endl;
+        switch (cases)
+        {
+        case 1:
+            M2 = diagonal(M);
+            cout<<"Matrice des diagonales : "<<endl;
+            M2->afficheMatrice();
+            M2->destructor();
+            break;
+        
+        case 2:
+            M2 = diagonal2(M);
+            cout<<"Matrice des diagonales inverses : "<<endl;
+            M2->afficheMatrice();
+            M2->destructor();
+            break;
+
+        case 3:
+            cout<<"Etrez la sequence 1 : ";
+            cin>>s1;
+            cout<<"Etrez la sequence 2 : ";
+            cin>>s2;
+            M->destructor();
+            M = dotplot1(s1,s2);
+            cout<<"Matrice du dotplot : "<<endl;
+            M->afficheMatrice();
+            break;
+        
+        default:
+            M->destructor();
+            return 0;
+        }
+    }
 }
