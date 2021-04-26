@@ -1,6 +1,7 @@
 #include "dotplot.h"
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -125,6 +126,21 @@ binMat* diagonal2(binMat* Mdot)
     return Mdiag;
 }
 
+void datgeneration(binMat* Mdot){
+    int n,count;
+    binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
+    std::ofstream fichier { "dotplot.dat" };
+    for (int i = 0; i < Mdot->n; i++)
+    {
+        for (int j = 0; j < Mdot->m; j++)
+        {
+            if(Mdot->Mat[i][j]){
+                fichier << i << " " << j << endl;
+            }
+        }
+    }
+}
+
 int main()
 {
     string s1,s2;
@@ -143,6 +159,7 @@ int main()
             <<"1- Exposer les diagonales"<<endl
             <<"2- Exposer les diagonales inverses"<<endl
             <<"3- Changer les sequences"<<endl
+            <<"4- Génération du dotplot.png"<<endl
             <<"Autre pour sortir du programme"<<endl;
         cin>>cases;
         cout<<endl;
@@ -171,6 +188,14 @@ int main()
             M = dotplot1(s1,s2);
             cout<<"Matrice du dotplot : "<<endl;
             M->afficheMatrice();
+            break;
+        
+        case 4:
+            cout<<"Génération du fichier dat : "<<endl;
+            M->afficheMatrice();
+            datgeneration(M);
+            cout<<"Execution du dotplot.gp"<<endl;
+            system("gnuplot dotplot.gp");
             break;
         
         default:
