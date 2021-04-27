@@ -5,5 +5,8 @@
 graphtest: dotplot.cpp
 	g++ -Wpedantic $^ -o dotplot
 
+mostlyclean :
+	rm -rf *.o *.dat
+
 clean : 
 	rm -rf *.o *.dat *.png
