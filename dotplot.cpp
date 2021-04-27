@@ -141,6 +141,14 @@ void datgeneration(binMat* Mdot){
     }
 }
 
+void majPng(binMat* Mdot){
+    cout<<"Génération du fichier dat : "<<endl;
+    datgeneration(Mdot);
+    cout<<"Execution du dotplot.gp"<<endl;
+    system("gnuplot dotplot.gp");
+}
+
+
 int main()
 {
     string s1,s2;
@@ -151,6 +159,7 @@ int main()
     binMat* M = dotplot1(s1,s2);
     cout<<"Matrice du dotplot : "<<endl;
     M->afficheMatrice();
+    majPng(M);
     unsigned int cases;
     binMat* M2;
     while (1)
@@ -159,7 +168,6 @@ int main()
             <<"1- Exposer les diagonales"<<endl
             <<"2- Exposer les diagonales inverses"<<endl
             <<"3- Changer les sequences"<<endl
-            <<"4- Génération du dotplot.png"<<endl
             <<"Autre pour sortir du programme"<<endl;
         cin>>cases;
         cout<<endl;
@@ -169,6 +177,7 @@ int main()
             M2 = diagonal(M);
             cout<<"Matrice des diagonales : "<<endl;
             M2->afficheMatrice();
+            majPng(M2);
             M2->destructor();
             break;
         
@@ -176,6 +185,7 @@ int main()
             M2 = diagonal2(M);
             cout<<"Matrice des diagonales inverses : "<<endl;
             M2->afficheMatrice();
+            majPng(M2);
             M2->destructor();
             break;
 
@@ -188,14 +198,7 @@ int main()
             M = dotplot1(s1,s2);
             cout<<"Matrice du dotplot : "<<endl;
             M->afficheMatrice();
-            break;
-        
-        case 4:
-            cout<<"Génération du fichier dat : "<<endl;
-            M->afficheMatrice();
-            datgeneration(M);
-            cout<<"Execution du dotplot.gp"<<endl;
-            system("gnuplot dotplot.gp");
+            majPng(M);
             break;
         
         default:
