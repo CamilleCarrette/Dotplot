@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <random>
+#include <ctime>
 
 using namespace std;
 
@@ -21,10 +23,13 @@ binMat::binMat(int n, int m)
     }
 }
 
-
-
 void binMat::afficheMatrice()
 {
+    if (this->n > 20 || this->m > 20)
+    {
+        cout<<"Matrice trop grande"<<endl<<endl;
+        return;
+    }
     for (int i = 0; i < this->n; i++)
     {
         for (int j = 0; j < this->m; j++)
@@ -66,6 +71,7 @@ binMat* diagonal(binMat* Mdot)
     cout<<"Les diagonales de longueur au moins 'n' seront prises en compte"<<endl;
     cout<<"Entrez n : ";
     cin>>n;
+    cout<<endl;
     for (int i = 0; i < (Mdot->n - (n-1)); i++)
     {
         for (int j = 0; j < (Mdot->m - (n-1)); j++)
@@ -92,7 +98,6 @@ binMat* diagonal(binMat* Mdot)
     return Mdiag;
 }
 
-
 binMat* diagonal2(binMat* Mdot)
 {
     int n,count;
@@ -100,6 +105,7 @@ binMat* diagonal2(binMat* Mdot)
     cout<<"Les diagonales de longueur au moins 'n' seront prises en compte"<<endl;
     cout<<"Entrez n : ";
     cin>>n;
+    cout<<endl;
     for (int i = 0; i < (Mdot->n - (n-1)); i++)
     {
         for (int j = (n-1); j < Mdot->m; j++)
@@ -142,20 +148,70 @@ void datgeneration(binMat* Mdot){
 }
 
 void majPng(binMat* Mdot){
-    cout<<"Génération du fichier dat : "<<endl;
+    cout<<"Generation du fichier dat : "<<endl;
     datgeneration(Mdot);
     cout<<"Execution du dotplot.gp"<<endl;
     system("gnuplot dotplot.gp");
+}
+
+void randSequence(string* s1, string* s2)
+{
+    int l1,l2;
+    string rand1,rand2;
+    string pool = {'a','c','g','t'};
+    srand(time(NULL));
+    cout<<"Longueur de la sequence 1 : ";
+    cin>>l1;
+    cout<<"Longueur de la sequence 2 : ";
+    cin>>l2;
+    rand1.resize(l1);
+    rand2.resize(l2);
+    for (int i = 0; i < l1; i++)
+    {
+        rand1[i] = pool[rand()%4];
+    }
+    for (int i = 0; i < l2; i++)
+    {
+        rand2[i] = pool[rand()%4];
+    }
+    *s1=rand1;
+    *s2=rand2;
+    cout<<"s1 : "<<*s1<<endl<<"s2 : "<<*s2<<endl;       
+}
+
+void choixSequence(string* s1, string* s2)
+{
+    int c;
+    cout<<endl<<"Quel type de sequence :"<<endl<<endl
+        <<"1- sequence rentree a la main"<<endl
+        <<"2- sequence aleatoire parmi {a,c,g,t}"<<endl
+        <<"Autre pour sortir du programme"<<endl;
+    cin>>c;
+    cout<<endl;
+    switch (c)
+    {
+    case 1:
+        cout<<"Etrez la sequence 1 : ";
+        cin>>*s1;
+        cout<<"Etrez la sequence 2 : ";
+        cin>>*s2;
+        break;
+    
+    case 2:
+        randSequence(s1,s2);
+        break;
+
+    default:
+        break;
+    }
+    cout<<endl;
 }
 
 
 int main()
 {
     string s1,s2;
-    cout<<"Etrez la sequence 1 : ";
-    cin>>s1;
-    cout<<"Etrez la sequence 2 : ";
-    cin>>s2;
+    choixSequence(&s1,&s2);
     binMat* M = dotplot1(s1,s2);
     cout<<"Matrice du dotplot : "<<endl;
     M->afficheMatrice();
@@ -164,7 +220,7 @@ int main()
     binMat* M2;
     while (1)
     {
-        cout<<"Que faire :"<<endl<<endl
+        cout<<endl<<"Que faire :"<<endl<<endl
             <<"1- Exposer les diagonales"<<endl
             <<"2- Exposer les diagonales inverses"<<endl
             <<"3- Changer les sequences"<<endl
@@ -190,10 +246,7 @@ int main()
             break;
 
         case 3:
-            cout<<"Etrez la sequence 1 : ";
-            cin>>s1;
-            cout<<"Etrez la sequence 2 : ";
-            cin>>s2;
+            choixSequence(&s1,&s2);
             M->destructor();
             M = dotplot1(s1,s2);
             cout<<"Matrice du dotplot : "<<endl;
