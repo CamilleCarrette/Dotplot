@@ -8,4 +8,4 @@ set xlabel "Séquence 1"
 set ylabel "Séquence 2"
 set output "dotplot.png"
 set title "Dotplot"
-plot "dotplot.dat" with points lt 8 pt 5 ps 2
+plot "dotplot.dat" with points lt 8 pt 5 ps 2.5

@@ -148,7 +148,14 @@ void datgeneration(binMat* Mdot){
 }
 
 void majPng(binMat* Mdot,string s1,string s2){
-    int n = max(s1.size(),s2.size());
+    float n = max(s1.size(),s2.size());
+    float ps;
+    if(n>15){
+        ps = 100/n; 
+    }else{
+        ps = 10;
+    }
+      
     cout<<"TEST : taille de max des deux seq : "<<n<<endl;
     cout<<"Generation du fichier dat : "<<endl;
     datgeneration(Mdot);
@@ -168,7 +175,7 @@ void majPng(binMat* Mdot,string s1,string s2){
         gp << "plot \"dotplot.dat\" with points ";
         gp << "lt 8 "; //couleur des points
         gp << "pt 5 "; //genre de points
-        gp << "ps 2\n"; //taille des points
+        gp << "ps "<< ps <<"\n"; //taille des points
         
         gp.close();
     cout<<"Execution du dotplot.gp"<<endl;
