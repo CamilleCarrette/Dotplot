@@ -135,7 +135,7 @@ binMat* diagonal2(binMat* Mdot)
 void datgeneration(binMat* Mdot){
     int n,count;
     binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
-    std::ofstream fichier { "dotplot.dat" };
+    ofstream fichier { "dotplot.dat" };
     for (int i = 0; i < Mdot->n; i++)
     {
         for (int j = 0; j < Mdot->m; j++)
@@ -147,9 +147,30 @@ void datgeneration(binMat* Mdot){
     }
 }
 
-void majPng(binMat* Mdot){
+void majPng(binMat* Mdot,string s1,string s2){
+    int n = max(s1.size(),s2.size());
+    cout<<"TEST : taille de max des deux seq : "<<n<<endl;
     cout<<"Generation du fichier dat : "<<endl;
     datgeneration(Mdot);
+    cout<<"Mise a jour du fichier gnuplot"<<endl;
+    ofstream gp;
+    gp.open("dotplot.gp");
+
+        gp << "set terminal png notransparent interlace truecolor enhanced nocrop font \"arial,18\" size 1600,1200\n\n";
+        gp << "set title \"Dotplot\"\n";
+        gp << "unset key\n"; 
+        gp << "set xrange [-1:]\n"; 
+        gp << "set yrange [-1:]\n"; 
+        gp << "set xlabel \"Séquence 1\"\n"; 
+        gp << "set ylabel \"Séquence 2\"\n";
+        gp << "set output \"dotplot.png\"\n"; 
+        gp << "set title \"Dotplot\"\n";
+        gp << "plot \"dotplot.dat\" with points ";
+        gp << "lt 8 "; //couleur des points
+        gp << "pt 5 "; //genre de points
+        gp << "ps 2\n"; //taille des points
+        
+        gp.close();
     cout<<"Execution du dotplot.gp"<<endl;
     system("gnuplot dotplot.gp");
 }
@@ -215,7 +236,7 @@ int main()
     binMat* M = dotplot1(s1,s2);
     cout<<"Matrice du dotplot : "<<endl;
     M->afficheMatrice();
-    majPng(M);
+    majPng(M,s1,s2);
     unsigned int cases;
     binMat* M2;
     while (1)
@@ -233,7 +254,7 @@ int main()
             M2 = diagonal(M);
             cout<<"Matrice des diagonales : "<<endl;
             M2->afficheMatrice();
-            majPng(M2);
+            majPng(M2,s1,s2);
             M2->destructor();
             break;
         
@@ -241,7 +262,7 @@ int main()
             M2 = diagonal2(M);
             cout<<"Matrice des diagonales inverses : "<<endl;
             M2->afficheMatrice();
-            majPng(M2);
+            majPng(M2,s1,s2);
             M2->destructor();
             break;
 
@@ -251,7 +272,7 @@ int main()
             M = dotplot1(s1,s2);
             cout<<"Matrice du dotplot : "<<endl;
             M->afficheMatrice();
-            majPng(M);
+            majPng(M,s1,s2);
             break;
         
         default:

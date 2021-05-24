@@ -26,7 +26,7 @@ binMat* diagonal2(binMat* Mdot);
 
 void datgeneration(binMat* Mdot);
 
-void majPng(binMat* Mdot);
+void majPng(binMat* Mdot,string s1,string s2);
 
 void randSequence(string* s1, string* s2);
 

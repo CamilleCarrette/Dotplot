@@ -2,3 +2,4 @@
 *.dat
 *.png
 dotplot
+gnuplot-iostream/
