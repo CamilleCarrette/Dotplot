@@ -8,7 +8,7 @@
 ***
 Dotplot est une application qui permet de générer des dotplot de façon graphique grâce à une interface assez simplifier 
 ### Screenshot
-![expemple de dotplot (deux séquences random de taille 100)](dotplot.png)
+![expemple de dotplot (deux séquences random de taille 100)](./dotplotexemple.png)
 ## Technologies
 ***
 List des technologies utilisées dans le porjet
