@@ -7,7 +7,7 @@
 
 using namespace std;
 
-binMat::binMat(int n, int m) //Construit une matrice binaire de taille n*m
+binMat::binMat(int n, int m) //Construit une matrice binaire de taille n*m.
 {
     this->n = n;
     this->m = m;
@@ -23,9 +23,9 @@ binMat::binMat(int n, int m) //Construit une matrice binaire de taille n*m
     }
 }
 
-void binMat::afficheMatrice() //affiche une matrice binaire
+void binMat::afficheMatrice() //Affiche une matrice binaire.
 {
-    if (this->n > 20 || this->m > 20)
+    if (this->n > 20 || this->m > 20) //Condition pour alléger la console.
     {
         cout<<"Matrice trop grande"<<endl<<endl;
         return;
@@ -50,21 +50,21 @@ void binMat::destructor() //Destructeur d'une matrice (libération de l'espace).
     delete[] this->Mat;
 }
 
-binMat* dotplot1(string s1, string s2) //effectue le dotplot entre s1 et s2
+binMat* dotplot1(string s1, string s2) //Effectue le dotplot entre s1 et s2.
 {
     binMat* M = new binMat(s1.length(),s2.length());
     for (int i = 0; i < s1.length(); i++)
     {
         for (int j = 0; j < s2.length(); j++)
         {
-            M->Mat[i][j] = (s1[i]==s2[j]); //si les deux caractère sont égaux, cellule a 1, 0 sinon.
+            M->Mat[i][j] = (s1[i]==s2[j]); //Si les deux caractères sont égaux, cellule à 1, 0 sinon.
         }
         
     }
     return M;
 }
 
-binMat* diagonal(binMat* Mdot) //Ne conserve que les cellule lorsqu'elles font parties d'une diagonal d'au moins n cellules.
+binMat* diagonal(binMat* Mdot) //Ne conserve que les cellules qui font partie d'une diagonale d'au moins n cellules.
 {
     int n,count;
     binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
@@ -98,7 +98,7 @@ binMat* diagonal(binMat* Mdot) //Ne conserve que les cellule lorsqu'elles font p
     return Mdiag;
 }
 
-binMat* diagonal2(binMat* Mdot) //Ne conserve que les cellule lorsqu'elles font parties d'une diagonal inversée d'au moins n cellules.
+binMat* diagonal2(binMat* Mdot) //Ne conserve que les cellules qui font partie d'une diagonale inversée d'au moins n cellules.
 {
     int n,count;
     binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
@@ -132,7 +132,7 @@ binMat* diagonal2(binMat* Mdot) //Ne conserve que les cellule lorsqu'elles font 
     return Mdiag;
 }
 
-void datgeneration(binMat* Mdot){ //Produit le fichier dat nécessaire au fichier gnuplot
+void datgeneration(binMat* Mdot){ //Produit le fichier .dat nécessaire au fichier gnuplot.
     int n,count;
     binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
     ofstream fichier { "dotplot.dat" };
@@ -147,7 +147,7 @@ void datgeneration(binMat* Mdot){ //Produit le fichier dat nécessaire au fichie
     }
 }
 
-void majPng(binMat* Mdot,string s1,string s2){ //Génére le fichier gnuplot en fonction des paramètre du dotplot et crée le fichier .png qui l'affiche
+void majPng(binMat* Mdot,string s1,string s2){ //Génère le fichier gnuplot en fonction des paramètres du dotplot et crée le fichier .png qui l'affiche.
     float n = max(s1.size(),s2.size());
     float ps;
     if(n>15){
@@ -173,20 +173,20 @@ void majPng(binMat* Mdot,string s1,string s2){ //Génére le fichier gnuplot en 
         gp << "set output \"dotplot.png\"\n"; 
         gp << "set title \"Dotplot\"\n";
         gp << "plot \"dotplot.dat\" with points ";
-        gp << "lt 8 "; //couleur des points
-        gp << "pt 5 "; //genre de points
-        gp << "ps "<< ps <<"\n"; //taille des points
+        gp << "lt 8 "; //Couleur des points
+        gp << "pt 5 "; //Style de points
+        gp << "ps "<< ps <<"\n"; //Taille des points
         
         gp.close();
     cout<<"Execution du dotplot.gp"<<endl;
     system("gnuplot dotplot.gp");
 }
 
-void randSequence(string* s1, string* s2) //Génération d'une séquence ADN random
+void randSequence(string* s1, string* s2) //Génération d'une séquence aléatoire à partir d'un dictionnaire de caractères.
 {
     int l1,l2;
     string rand1,rand2;
-    string pool = {'a','c','g','t'}; // dico pour l'ADN
+    string pool = {'a','c','g','t'}; //Dictionnaire pour l'ADN.
     srand(time(NULL));
     cout<<"Longueur de la sequence 1 : ";
     cin>>l1;
@@ -196,18 +196,18 @@ void randSequence(string* s1, string* s2) //Génération d'une séquence ADN ran
     rand2.resize(l2);
     for (int i = 0; i < l1; i++)
     {
-        rand1[i] = pool[rand()%4];
+        rand1[i] = pool[rand()%pool.size()];
     }
     for (int i = 0; i < l2; i++)
     {
-        rand2[i] = pool[rand()%4];
+        rand2[i] = pool[rand()%pool.size()];
     }
     *s1=rand1;
     *s2=rand2;
     cout<<"s1 : "<<*s1<<endl<<"s2 : "<<*s2<<endl;       
 }
 
-void choixSequence(string* s1, string* s2)  //Interface de l'application
+void choixSequence(string* s1, string* s2)  //Interface de l'application.
 {
     int c;
     cout<<endl<<"Quel type de sequence :"<<endl<<endl
