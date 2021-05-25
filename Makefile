@@ -9,4 +9,4 @@ mostlyclean :
 	rm -rf *.o *.dat
 
 clean : 
-	rm -rf *.o *.dat *.png
+	rm -rf *.o *.dat dotplot.png
