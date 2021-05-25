@@ -7,7 +7,7 @@
 
 using namespace std;
 
-binMat::binMat(int n, int m)
+binMat::binMat(int n, int m) //Construit une matrice binaire de taille n*m
 {
     this->n = n;
     this->m = m;
@@ -23,7 +23,7 @@ binMat::binMat(int n, int m)
     }
 }
 
-void binMat::afficheMatrice()
+void binMat::afficheMatrice() //affiche une matrice binaire
 {
     if (this->n > 20 || this->m > 20)
     {
@@ -41,7 +41,7 @@ void binMat::afficheMatrice()
     cout<<endl;
 }
 
-void binMat::destructor()
+void binMat::destructor() //Destructeur d'une matrice (libération de l'espace).
 {
     for (int i = 0; i < this->n; i++)
     {       
@@ -50,21 +50,21 @@ void binMat::destructor()
     delete[] this->Mat;
 }
 
-binMat* dotplot1(string s1, string s2)
+binMat* dotplot1(string s1, string s2) //effectue le dotplot entre s1 et s2
 {
     binMat* M = new binMat(s1.length(),s2.length());
     for (int i = 0; i < s1.length(); i++)
     {
         for (int j = 0; j < s2.length(); j++)
         {
-            M->Mat[i][j] = (s1[i]==s2[j]);
+            M->Mat[i][j] = (s1[i]==s2[j]); //si les deux caractère sont égaux, cellule a 1, 0 sinon.
         }
         
     }
     return M;
 }
 
-binMat* diagonal(binMat* Mdot)
+binMat* diagonal(binMat* Mdot) //Ne conserve que les cellule lorsqu'elles font parties d'une diagonal d'au moins n cellules.
 {
     int n,count;
     binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
@@ -98,7 +98,7 @@ binMat* diagonal(binMat* Mdot)
     return Mdiag;
 }
 
-binMat* diagonal2(binMat* Mdot)
+binMat* diagonal2(binMat* Mdot) //Ne conserve que les cellule lorsqu'elles font parties d'une diagonal inversée d'au moins n cellules.
 {
     int n,count;
     binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
@@ -132,7 +132,7 @@ binMat* diagonal2(binMat* Mdot)
     return Mdiag;
 }
 
-void datgeneration(binMat* Mdot){
+void datgeneration(binMat* Mdot){ //Produit le fichier dat nécessaire au fichier gnuplot
     int n,count;
     binMat* Mdiag = new binMat(Mdot->n,Mdot->m);
     ofstream fichier { "dotplot.dat" };
@@ -147,7 +147,7 @@ void datgeneration(binMat* Mdot){
     }
 }
 
-void majPng(binMat* Mdot,string s1,string s2){
+void majPng(binMat* Mdot,string s1,string s2){ //Génére le fichier gnuplot en fonction des paramètre du dotplot et crée le fichier .png qui l'affiche
     float n = max(s1.size(),s2.size());
     float ps;
     if(n>15){
@@ -182,11 +182,11 @@ void majPng(binMat* Mdot,string s1,string s2){
     system("gnuplot dotplot.gp");
 }
 
-void randSequence(string* s1, string* s2)
+void randSequence(string* s1, string* s2) //Génération d'une séquence ADN random
 {
     int l1,l2;
     string rand1,rand2;
-    string pool = {'a','c','g','t'};
+    string pool = {'a','c','g','t'}; // dico pour l'ADN
     srand(time(NULL));
     cout<<"Longueur de la sequence 1 : ";
     cin>>l1;
@@ -207,7 +207,7 @@ void randSequence(string* s1, string* s2)
     cout<<"s1 : "<<*s1<<endl<<"s2 : "<<*s2<<endl;       
 }
 
-void choixSequence(string* s1, string* s2)
+void choixSequence(string* s1, string* s2)  //Interface de l'application
 {
     int c;
     cout<<endl<<"Quel type de sequence :"<<endl<<endl
